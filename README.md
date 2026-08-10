@@ -32,7 +32,9 @@ Configure the repository before the first deployment:
 1. Bootstrap the target account and region once with `npx cdk bootstrap`.
 2. Create an AWS IAM role that trusts GitHub's OIDC provider and grants the
    permissions needed by CDK/CloudFormation to deploy this stack.
-3. Add the role ARN as the repository secret `AWS_ROLE_ARN`.
+3. Add the role ARN as the repository secret or variable `AWS_ROLE_ARN` under
+   **Settings > Secrets and variables > Actions**. Repository secrets take
+   precedence when both are configured.
 4. Optionally add the repository variable `AWS_REGION` (defaults to
    `us-east-1`) and `UI_BUCKET_NAME` (defaults to
    `celebration-of-lights-ui`).
