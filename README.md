@@ -20,3 +20,23 @@ npm ci
 npm run build
 npm run deploy -- --require-approval never
 ```
+
+## GitHub Actions deployment
+
+The workflow in `.github/workflows/deploy.yml` builds and synthesizes the CDK
+app on pull requests. It deploys on pushes to `main` and can also be started
+manually from the Actions tab.
+
+Configure the repository before the first deployment:
+
+1. Bootstrap the target account and region once with `npx cdk bootstrap`.
+2. Create an AWS IAM role that trusts GitHub's OIDC provider and grants the
+   permissions needed by CDK/CloudFormation to deploy this stack.
+3. Add the role ARN as the repository secret `AWS_ROLE_ARN`.
+4. Optionally add the repository variable `AWS_REGION` (defaults to
+   `us-east-1`) and `UI_BUCKET_NAME` (defaults to
+   `celebration-of-lights-ui`).
+
+The role's trust policy should restrict `token.actions.githubusercontent.com`
+to this repository and the `main` branch. No long-lived AWS access keys are
+required.
